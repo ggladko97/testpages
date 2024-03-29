@@ -1,0 +1,34 @@
+<html lang="EN">
+<head>
+    <title>WebSDK CDN Example</title>
+</head>
+<body>
+<b>Maximum document loading time 30 minutes!</b>
+<script src="https://static.sumsub.com/idensic/static/sns-websdk-builder.js"></script>
+<div id="sumsub-websdk-container"></div>
+<script>
+    function launchWebSdk(accessToken) {
+        let snsWebSdkInstance = snsWebSdk.init(
+            accessToken,
+            // token update callback, must return Promise
+            () => this.getNewAccessToken()
+        )
+            .withConf({
+                lang: 'en', //language of WebSDK texts and comments (ISO 639-1 format)
+            })
+            .on('onError', (error) => {
+                console.log('onError', payload)
+            })
+            .onMessage((type, payload) => {
+                console.log('onMessage', type, payload)
+            })
+            .build();
+
+        // you are ready to go:
+        // just launch the WebSDK by providing the container element for it
+        snsWebSdkInstance.launch('#sumsub-websdk-container')
+    }
+    launchWebSdk('_act-jwt-eyJhbGciOiJub25lIn0.eyJqdGkiOiJfYWN0LTU4ZjM2OTU2LTE1ZGUtNDA5MS05ODU1LWVlNmUyZWQ4YWY2MCIsInVybCI6Imh0dHBzOi8vYXBpLnN1bXN1Yi5jb20ifQ.');
+</script>
+</body>
+</html>
